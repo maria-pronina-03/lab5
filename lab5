@@ -1,0 +1,125 @@
+import java.util.Scanner;
+class Fraction {
+
+    int numerator;
+    int denominator;
+    public Fraction() {
+        numerator = 1;
+        denominator = 1;
+    }
+    public Fraction(int numr, int denr) {
+        numerator = numr;
+        denominator = denr;
+        sokr();
+    }
+
+    public int getNumerator() {
+        return numerator;
+    }
+
+    public int getDenominator() {
+        return denominator;
+    }
+
+
+    public int Evkl(int a,int b){ // Нахождение НОДа алгоритмом Евклида
+        if(a<0)
+            a=-1*a;
+        if(b<0)
+            b=-1*b;
+        int t;
+        while(b!=0){
+            t=b;
+            b = a%b;
+            a = t;
+        }
+        return a;
+    }
+    void sokr() {
+        int NOD = Evkl(numerator, denominator);
+        numerator /= NOD;
+        denominator /= NOD;
+    }
+
+
+    public Fraction plus(Fraction fractionTwo) {
+        int numer = (numerator * fractionTwo.getDenominator()) +
+                (fractionTwo.getNumerator() * denominator);
+        int denr = denominator * fractionTwo.getDenominator();
+        return new Fraction(numer, denr);
+    }
+    public Fraction plus(int number) {
+        return plus(new Fraction(number, 1));
+    }
+
+    public Fraction minus(Fraction fractionTwo) {
+        int newNumerator = (numerator * fractionTwo.denominator) -
+                (fractionTwo.numerator * denominator);
+        int newDenominator = denominator * fractionTwo.denominator;
+        Fraction result = new Fraction(newNumerator, newDenominator);
+        return result;
+    }
+    public Fraction minus(int number) {
+        return minus(new Fraction(number, 1));
+    }
+
+
+    public Fraction multi(Fraction fractionTwo) {
+        int newNumerator = numerator * fractionTwo.numerator;
+        int newDenominator = denominator * fractionTwo.denominator;
+        Fraction result = new Fraction(newNumerator, newDenominator);
+        return result;
+    }
+    public Fraction multi(int number) {
+        return multi(new Fraction(number, 1));
+    }
+
+    public Fraction del(Fraction fractionTwo) {
+        int newNumerator = numerator * fractionTwo.getDenominator();
+        int newDenominator = denominator * fractionTwo.numerator;
+        Fraction result = new Fraction(newNumerator, newDenominator);
+        return result;
+    }
+    public Fraction del(int number) {
+        return del(new Fraction(number, 1));
+    }
+
+
+    public String toString() {
+        return this.numerator + "/" + this.denominator;
+    }
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        System.out.println("Введите сначала числитель, затем знаменатель 1 дроби: ");
+        Fraction f1 = new Fraction(in.nextInt(), in.nextInt());
+        System.out.println(f1.toString());
+        System.out.println("Введите сначала числитель, затем знаменатель 2 дроби: ");
+        Fraction f2 = new Fraction(in.nextInt(), in.nextInt());
+        System.out.println(f2.toString());
+        Fraction f3 = f1.plus(f2);
+        Fraction f4 = f1.plus(1);
+        System.out.println("Сумма двух заданных дробей: "
+                + f1 + " + " + f2 + " =  " + f3);
+        System.out.println("Сумма с дробью 1/1: "
+                + f1 + " + 1/1 = " + f4);
+        f3 = f1.minus(f2);
+        f4 = f1.minus(1);
+        System.out.println("Разность двух заданных дробей: "
+                + f1 + " - " + f2 + " =  " + f3);
+        System.out.println("Вычитание дроби 1/1: "
+                + f1 + " - 1/1 =  " + f4);
+        f3 = f1.del(f2);
+        f4 = f1.del(1);
+        System.out.println("Деление двух заданных дробей:  "
+                + f1 + " : " + f2 + " =  " + f3);
+        System.out.println("Деление на дробь 1/1: "
+                + f1 + " : " + "1/1 = " + f4);
+        f3 = f1.multi(f2);
+        f4 = f1.multi(1);
+        System.out.println("Умножение двух заданных дробей: "
+                + f1 + " * " + f2 + " =  " + f3);
+        System.out.println("Умножение на дробь 1/1: "
+                + f1 + " * " + "1/1 = " + f4);
+    }
+}
